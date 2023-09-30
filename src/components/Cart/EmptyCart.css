@@ -1,0 +1,25 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
+
+.emptyCart-container{
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+
+}
+
+.empty-cart{
+    display: flex;
+    flex-direction: column;
+}
+
+.emptyCart-image{
+    display: flex;
+    width: 200px;
+    height: 230px;
+    margin-top: 30px;
+    margin-left: 100px;
+    /* not fair */
+}

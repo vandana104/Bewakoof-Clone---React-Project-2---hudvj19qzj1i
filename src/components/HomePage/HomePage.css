@@ -1,0 +1,108 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
+
+.home-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.primarySection-home{
+    display: flex;
+    width: 100%;
+    height: 550px;
+    /* background-color: aquamarine; */
+    /* margin: 5px; */
+    /* margin is applying to its above divs */
+}
+
+.primarySection-image{
+   
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        margin: 0px 7px 0px 7px;
+    
+}
+
+.secondarySection-home{
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    width: 100%;
+    height: 290px;
+    background-color: aquamarine;
+}
+
+.secondarySection-imageContainer{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    /* align-items: center; */
+    text-align: center;
+    text-decoration: none;
+    color: black;
+}
+
+.secondarySection-images{
+    display: flex;
+    width: 150px;
+    height: 200px;
+    margin: 40px 10px 10px 10px;
+    object-fit: cover;
+}
+
+.thirdSectionHome-image{
+    width:759px;
+    height:430px
+}
+
+.fourthSectionHome-image{
+    width: 100%;
+}
+
+.fifthSectionHome-image{
+    width: 220px;
+    height: 270px;
+    object-fit: cover;
+    margin: 15px;
+}
+
+.sixthSectionHome-image{
+    width: 99%;
+    margin: 2.5px 0px 2.5px 2.5px;
+}
+
+.eighthSection-home{
+    margin:10px 0px 10px 0px;
+}
+
+.ninethSection-home{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+}
+
+.ninethSectionHomeImage{
+    display: flex;
+    justify-content: center;
+}
+.ninethSectionHomeImage-container{
+    display: flex;
+    justify-content: center;
+    /* width: 75%; */
+}
+/* .row{
+    display: flex;
+} */
+
+.tenthSectionHomeImage-container{
+    display: flex;
+}
+
+.twelvethSectionHome-image{
+    width: 100%;
+}

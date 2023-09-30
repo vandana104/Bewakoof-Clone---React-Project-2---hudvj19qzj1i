@@ -1,0 +1,20 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+.bottom-headerMain{
+    /* height:50px; */
+    width:100%; 
+    display: flex;
+    justify-content: center; 
+}
+.bottom-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: cadetblue; */
+    font-family: montserrat-bold,sans-serif;
+    height:60px;
+    width:1300px;
+}
