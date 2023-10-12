@@ -1,4 +1,60 @@
-*{
+.first-section-image{
+    width: 530px;
+    height: 550px;
+    margin: 0px 7.5px 0px 7.5px;
+    object-fit: contain;
+    transition: 'opacity 1s';
+    opacity: 1 
+}
+/* @keyframes imageChange {
+    0% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-25%);
+    }
+    50% {
+      transform: translateX(-50%);
+    }
+    75% {
+      transform: translateX(-75%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  .first-section-image {
+    animation: imageChange 20s linear infinite;
+    opacity: 1;
+  }
+  
+  .image-2 {
+    animation-delay: 5s;
+  }
+  
+  .image-3 {
+    animation-delay: 10s;
+  }
+  
+  .image-4 {
+    animation-delay: 15s;
+  }
+  
+  .image-5 {
+    animation-delay: 20s;
+  }
+   */
+
+
+
+
+
+
+
+
+
+/* *{
     padding: 0px;
     margin: 0px;
 }
@@ -13,12 +69,12 @@
     display: flex;
     width: 100%;
     height: 550px;
-    /* background-color: aquamarine; */
-    /* margin: 5px; */
+    background-color: aquamarine;
+    margin: 5px;
     /* margin is applying to its above divs */
-}
+/* } */ 
 
-.primarySection-image{
+/* .primarySection-image{
    
         max-width: 100%;
         max-height: 100%;
@@ -30,7 +86,6 @@
 .secondarySection-home{
     display: flex;
     justify-content: center;
-    /* align-items: center; */
     width: 100%;
     height: 290px;
     background-color: aquamarine;
@@ -41,7 +96,6 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-    /* align-items: center; */
     text-align: center;
     text-decoration: none;
     color: black;
@@ -83,7 +137,6 @@
 .ninethSection-home{
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
 }
 
 .ninethSectionHomeImage{
@@ -93,11 +146,7 @@
 .ninethSectionHomeImage-container{
     display: flex;
     justify-content: center;
-    /* width: 75%; */
 }
-/* .row{
-    display: flex;
-} */
 
 .tenthSectionHomeImage-container{
     display: flex;
@@ -105,4 +154,4 @@
 
 .twelvethSectionHome-image{
     width: 100%;
-}
+} */

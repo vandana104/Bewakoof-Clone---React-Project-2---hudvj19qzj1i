@@ -1,9 +1,10 @@
+import { Box } from "@mui/material"
 import "./Footer.css"
 import React from 'react'
 
 function Footer() {
   return (
-    <div className='footer'>
+    <Box className='footer' width="100%">
         <h2 className="bewakoof-logo">Bewakoof</h2>
         <div className="firstSection-footer">
             <div>
@@ -22,7 +23,7 @@ function Footer() {
                 <div></div>
             </div>
         </div>
-    </div>
+    </Box>
   )
 }
 

@@ -1,20 +1,13 @@
-*{
-    margin: 0px;
-    padding: 0px;
-}
-
 .bottom-headerMain{
-    /* height:50px; */
     width:100%; 
     display: flex;
     justify-content: center; 
 }
 .bottom-header{
+    height:50px;
+    width:100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
-    /* background-color: cadetblue; */
-    font-family: montserrat-bold,sans-serif;
-    height:60px;
-    width:1300px;
+    font-family: Helvetica;
 }

@@ -1,15 +1,7 @@
-*{
-    padding: 0px;
-    margin: 0px;
-}
-
 .mainHeader{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    /* background-color:grey; */
-    /* border: 0px 0px 1px 0px solid gray ; */
-    /* need to ad a line on bottom */
     border-bottom: 1px solid grey; 
     height:50px;
     width:100%;
@@ -37,4 +29,11 @@
     
     .search-button {
     color: #555;
+    }
+
+    .css-1q6at85-MuiInputBase-root-MuiOutlinedInput-root{
+        height: 38px;
+        padding-left: 0px !important;
+        margin-right: 10px;
+        background-color: #eaeaea;
     }
