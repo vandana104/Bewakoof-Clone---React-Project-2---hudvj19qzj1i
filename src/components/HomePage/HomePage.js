@@ -27,19 +27,19 @@ function HomePage() {
         dispatch({ type: "SET_PRODUCTS", payload: response.data.data });
         // const filter = response.data.data.filter((obj)=> obj.sellerTag != null )
         // // console.log(filter);
-        const map = response.data.data.map((obj)=> obj.sellerTag  )
+        const map = response.data.data.map((obj) => obj.sellerTag);
         console.log(map);
 
         const uniqueSellerTags = {};
         const filteredArray = [];
-      
+
         for (const obj of response.data.data) {
           if (!uniqueSellerTags.hasOwnProperty(obj.sellerTag)) {
             uniqueSellerTags[obj.sellerTag] = true;
             filteredArray.push(obj);
           }
         }
-        setTag(filteredArray)
+        setTag(filteredArray);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -50,12 +50,14 @@ function HomePage() {
     }
   }, [products]);
 
-  useEffect(()=>{
-    if(flag){
-
-      dispatch({type:"SET_FILTEREDPRODUCTS",payload:flag.charAt(0).toUpperCase() + flag.slice(1)})
+  useEffect(() => {
+    if (flag) {
+      dispatch({
+        type: "SET_FILTEREDPRODUCTS",
+        payload: flag.charAt(0).toUpperCase() + flag.slice(1),
+      });
     }
-  },[flag])
+  }, [flag]);
 
   return (
     <div>
@@ -87,11 +89,14 @@ function HomePage() {
       </Box>
       <Box
         display="flex"
-        width="80%"
         height="250px"
         margin="auto"
         gap="7.5px"
         sx={{
+          maxWidth: "680px", // Set a max-width to prevent infinite expansion
+          "& .fit-content-width": {
+            width: "fit-content",
+          },
           overflowX: "scroll",
           overflowY: "hidden",
           "&::-webkit-scrollbar": {
@@ -106,9 +111,9 @@ function HomePage() {
             onClick={() => {
               console.log("clickedddd");
               setFlag(obj.sellerTag);
-              setTimeout(()=>{
+              setTimeout(() => {
                 navigate("/filter");
-              },1000)
+              }, 1000);
             }}
             display="flex"
             flexDirection="column"
@@ -120,10 +125,7 @@ function HomePage() {
               padding: "10px",
             }}>
             <img src={obj.displayImage} />
-            <Typography
-              alignSelf="center"
-              color="rgba(1,1,1,0.7)"
-             >
+            <Typography alignSelf="center" color="rgba(1,1,1,0.7)">
               {obj.sellerTag}
             </Typography>
           </Box>

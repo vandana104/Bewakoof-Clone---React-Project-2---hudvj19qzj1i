@@ -10,7 +10,13 @@ import { useNavigate } from "react-router-dom";
 function MainHeader() {
   const navigate = useNavigate();
   return (
-    <div className="mainHeader">
+    <Box
+      display="flex"
+      justifyContent="space-around"
+      alignItems="center"
+      borderBottom="1px solid grey"
+      height="50px"
+      width="100%">
       <Box>
         <img
           onClick={() => navigate("/")}
@@ -19,14 +25,14 @@ function MainHeader() {
           style={{ width: "70%", cursor: "pointer" }}
         />
       </Box>
-      <div className="mh-right">
+      <Box display="flex">
         <TextField
           placeholder="Search..."
           variant="outlined"
           InputProps={{
             startAdornment: (
               <IconButton
-                className="search-button"
+                sx={{ color: "#555"}}
                 type="submit"
                 aria-label="search">
                 <SearchIcon />
@@ -36,9 +42,9 @@ function MainHeader() {
         />
         <Divider orientation="vertical" className="vertical-divider" />
         <Box display="flex" alignItems="center" gap="12px">
-          <PersonIcon />
-          <FavoriteBorderIcon />
-          <ShoppingBagOutlinedIcon />
+          <PersonIcon sx={{cursor:"pointer"}} />
+          <FavoriteBorderIcon sx={{cursor:"pointer"}} />
+          <ShoppingBagOutlinedIcon sx={{cursor:"pointer"}} />
           <Avatar
             alt="User Avatar"
             sx={{
@@ -48,8 +54,8 @@ function MainHeader() {
             }}
           />
         </Box>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 

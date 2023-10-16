@@ -1,26 +1,7 @@
-.mainHeader{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    border-bottom: 1px solid grey; 
-    height:50px;
-    width:100%;
-}
 
-.mh-right{
-    display: flex;
-}
 
-.mh-search {
-    display: flex;
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 4px;
-    background: white;
-    width: 300px; /* Adjust width as needed */
-    height: 50px;
-}
+
+
     
     .search-input {
     flex: 1;

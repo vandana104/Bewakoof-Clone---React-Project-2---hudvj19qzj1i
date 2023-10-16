@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useStateProvider } from "../utils/StateProvider";
 
 function Product({ obj }) {
-    const [{productId},dispatch] = useStateProvider()
+  const [{ productId }, dispatch] = useStateProvider();
 
   const navigate = useNavigate();
 
@@ -26,12 +26,20 @@ function Product({ obj }) {
         }, 1000);
       }}
       sx={{ cursor: "pointer" }}>
-      <img src={obj.displayImage} style={{ width: "100%", height: "75%" }} />
-      <Typography>{obj.brand}</Typography>
-      <Typography whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">
-        {obj.description}
-      </Typography>
-      <Typography>{obj.price + " $"}</Typography>
+      <img
+        src={obj.displayImage}
+        style={{ width: "100%", height: "75%", objectFit: "cover" }}
+      />
+      <Box padding="10px">
+        <Typography>{obj.brand}</Typography>
+        <Typography
+          whiteSpace="nowrap"
+          overflow="hidden"
+          textOverflow="ellipsis">
+          {obj.description}
+        </Typography>
+        <Typography>{obj.price + " $"}</Typography>
+      </Box>
     </Box>
   );
 }

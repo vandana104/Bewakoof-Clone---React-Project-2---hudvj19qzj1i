@@ -8,6 +8,8 @@ import Footer from "./components/Header/Footer";
 import ProductDetail from "./components/ProductDetail/ProductDetail";
 import { Route, Routes, useLocation } from "react-router-dom";
 import FilteredPage from "./components/FilteredPage/FilteredPage";
+import Cart from "./components/Cart/Cart";
+import Wishlist from "./components/Wishlist/Wishlist";
 
 function App() {
   const location = useLocation();
@@ -27,6 +29,9 @@ function App() {
             <Route path="/" exact element={<HomePage/>} />
             <Route path="/product" element={<ProductDetail />} />
             <Route path="/filter" element={<FilteredPage />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+            
           </Routes>
           <Footer />
         </>
