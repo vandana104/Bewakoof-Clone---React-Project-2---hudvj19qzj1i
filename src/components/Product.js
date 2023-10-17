@@ -3,14 +3,27 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStateProvider } from "../utils/StateProvider";
 
-function Product({ obj }) {
+function Product({ obj, key }) {
   const [{ productId }, dispatch] = useStateProvider();
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(productId);
-  }, [productId]);
+  const handleWishList = (obj) => {
+    var productcard = JSON.parse(localStorage.getItem("products")) || [];
+
+    const flag = productcard.some((card) => card._id === obj._id);
+    console.log(flag);
+
+    if (!flag) {
+      const UpdatedCard = [...productcard, obj];
+      localStorage.setItem("products", JSON.stringify(UpdatedCard));
+      console.log(productcard);
+      // const UpdatedVideo = [...productcard, obj];
+      // localStorage.setItem("products", JSON.stringify(UpdatedVideo));
+      // console.log(productcard);
+    }
+  };
+
   return (
     <Box
       display="flex"
@@ -22,23 +35,31 @@ function Product({ obj }) {
         console.log(obj._id);
         dispatch({ type: "SET_PRODUCTID", payload: obj._id });
         setTimeout(() => {
+          handleWishList(obj);
           navigate("/product");
         }, 1000);
       }}
-      sx={{ cursor: "pointer" }}>
+      sx={{ cursor: "pointer", "@media(max-width:500px)": { width: "200px" } }}>
       <img
         src={obj.displayImage}
         style={{ width: "100%", height: "75%", objectFit: "cover" }}
       />
       <Box padding="10px">
-        <Typography>{obj.brand}</Typography>
+        <Typography
+          whiteSpace="nowrap"
+          overflow="hidden"
+          textOverflow="ellipsis"
+          fontWeight="600"
+          color="rgba(1,1,1,0.8)">
+          {obj.brand}
+        </Typography>
         <Typography
           whiteSpace="nowrap"
           overflow="hidden"
           textOverflow="ellipsis">
           {obj.description}
         </Typography>
-        <Typography>{obj.price + " $"}</Typography>
+        <Typography>&#8377;{obj.price} </Typography>
       </Box>
     </Box>
   );

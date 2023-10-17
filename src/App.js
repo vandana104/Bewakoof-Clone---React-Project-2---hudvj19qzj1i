@@ -4,15 +4,28 @@ import SignUp from "./components/SignUp/SignUp";
 import TopHeader from "./components/Header/TopHeader";
 import MainHeader from "./components/Header/MainHeader";
 import HomePage from "./components/HomePage/HomePage";
-import Footer from "./components/Header/Footer";
 import ProductDetail from "./components/ProductDetail/ProductDetail";
+import Footer from "./components/Footer/Footer"
 import { Route, Routes, useLocation } from "react-router-dom";
 import FilteredPage from "./components/FilteredPage/FilteredPage";
 import Cart from "./components/Cart/Cart";
 import Wishlist from "./components/Wishlist/Wishlist";
+import { useEffect } from "react";
+import { useStateProvider } from "./utils/StateProvider";
+import Product from "./components/Product";
 
 function App() {
   const location = useLocation();
+  const [, dispatch] = useStateProvider();
+  useEffect(() => {
+    const jwtToken = localStorage.getItem("jwtToken");
+    const userName = localStorage.getItem("userName");
+
+    if (jwtToken && userName) {
+      dispatch({ type: "SET_NAME", payload: userName });
+      dispatch({ type: "SET_TOKEN", payload: jwtToken });
+    }
+  }, [dispatch]);
   return (
     <div className="App">
       {location.pathname === "/login" ? (
@@ -26,14 +39,16 @@ function App() {
           <TopHeader />
           <MainHeader />
           <Routes>
-            <Route path="/" exact element={<HomePage/>} />
+            <Route path="/" exact element={<HomePage />} />
             <Route path="/product" element={<ProductDetail />} />
             <Route path="/filter" element={<FilteredPage />} />
             <Route path="/cart" element={<Cart />} />
+{/* /////////////////////////////////////////////////// */}
+            <Route path="/cartproduct" element={<Product/>} />
+{/* ///////////////////////////////////////////////////////////////// */}
             <Route path="/wishlist" element={<Wishlist />} />
-            
           </Routes>
-          <Footer />
+          <Footer/>
         </>
       )}
 

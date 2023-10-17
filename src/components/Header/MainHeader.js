@@ -1,14 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import "./MainHeader.css";
 import SearchIcon from "@mui/icons-material/Search";
-import { Avatar, Box, Divider, IconButton, TextField } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Divider,
+  IconButton,
+  Menu,
+  MenuItem,
+  TextField,
+} from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { useNavigate } from "react-router-dom";
+import { useStateProvider } from "../../utils/StateProvider";
 
 function MainHeader() {
+  const [, dispatch] = useStateProvider();
   const navigate = useNavigate();
+  const [avatarMenuAnchorEl, setAvatarMenuAnchorEl] = useState(null);
+  const userName = localStorage.getItem("userName") || "";
+
+  const handleAvatarClick = (event) => {
+    setAvatarMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleAvatarClose = () => {
+    setAvatarMenuAnchorEl(null);
+  };
+
+  const handleLogOut = () => {
+    localStorage.clear();
+    navigate("/");
+  };
+
   return (
     <Box
       display="flex"
@@ -32,7 +58,7 @@ function MainHeader() {
           InputProps={{
             startAdornment: (
               <IconButton
-                sx={{ color: "#555"}}
+                sx={{ color: "#555" }}
                 type="submit"
                 aria-label="search">
                 <SearchIcon />
@@ -42,17 +68,43 @@ function MainHeader() {
         />
         <Divider orientation="vertical" className="vertical-divider" />
         <Box display="flex" alignItems="center" gap="12px">
-          <PersonIcon sx={{cursor:"pointer"}} />
-          <FavoriteBorderIcon sx={{cursor:"pointer"}} />
-          <ShoppingBagOutlinedIcon sx={{cursor:"pointer"}} />
-          <Avatar
-            alt="User Avatar"
-            sx={{
-              width: 30,
-              height: 30,
-              cursor: "pointer",
-            }}
+          <PersonIcon sx={{ cursor: "pointer" }} />
+          <FavoriteBorderIcon
+            sx={{ cursor: "pointer" }}
+            onClick={() => navigate("/wishlist")}
           />
+          <ShoppingBagOutlinedIcon sx={{ cursor: "pointer" }} />
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <Avatar
+              alt="User Avatar"
+              sx={{
+                width: 30,
+                height: 30,
+                cursor: "pointer",
+              }}
+              onClick={handleAvatarClick}
+            />
+            <Menu
+              anchorEl={avatarMenuAnchorEl}
+              open={Boolean(avatarMenuAnchorEl)}
+              onClose={handleAvatarClose}>
+              {userName ? (
+                <div>
+                  <MenuItem onClick={() => navigate("/")}>
+                    Hello.. {userName}
+                  </MenuItem>
+                  <MenuItem onClick={handleLogOut}>Logout</MenuItem>
+                </div>
+              ) : (
+                <div>
+                  <MenuItem onClick={() => navigate("/login")}>Login</MenuItem>
+                  <MenuItem onClick={() => navigate("/signup")}>
+                    Signup
+                  </MenuItem>
+                </div>
+              )}
+            </Menu>
+          </div>
         </Box>
       </Box>
     </Box>

@@ -13,6 +13,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 function FilteredPage() {
   const [{ filteredProducts, products }] = useStateProvider();
   const [filteredProduct, setFilteredProduct] = useState(null);
+  const [duplicateFilter, setduplicateFilter] = useState(null);
 
   useEffect(() => {
     const filtered = products?.filter(
@@ -21,129 +22,185 @@ function FilteredPage() {
         filteredProducts,
     );
     setFilteredProduct(filtered);
+    setduplicateFilter(filtered);
   }, []);
 
   useEffect(() => {
     console.log(filteredProduct);
   }, [filteredProduct]);
 
+  const handleFilter = (value, key) => {
+    if (key === "gender") {
+      const newFiltered = duplicateFilter.filter((obj) => obj.gender === value);
+      console.log(newFiltered);
+      setFilteredProduct(newFiltered);
+    } else if (key === "price") {
+      const newFiltered = duplicateFilter.filter((obj) => obj.price <= value);
+      console.log(newFiltered);
+      setFilteredProduct(newFiltered);
+    } else {
+      const newFiltered = duplicateFilter.filter((obj) => obj.color === value);
+      console.log(newFiltered);
+      setFilteredProduct(newFiltered);
+    }
+  };
+
   const listItemStyle = {
     listStyleType: "none",
     color: "rgba(1,1,1,0.5)",
-    
   };
 
   return (
     <Box
       display="flex"
       flexDirection="column"
-      alignItems="center"
       justifyContent="center"
       width="100%">
-      <Box
-        display="flex"
-        marginX="100px"
-        padding="15px"
-        // alignItems="center"
-      >
-        <Typography variant="h4" fontWeight="500" color="black">
+      <Box display="flex" padding="15px" marginLeft="20px">
+        <Typography variant="h5" fontWeight="600" color="black">
           {filteredProducts}
         </Typography>
-        <Typography variant="h4" marginLeft="15px">
-          {`(${filteredProduct?.length})`}
+        <Typography variant="h5" marginLeft="15px">
+          {(`${filteredProduct?.length}`)}
         </Typography>
       </Box>
-      <Box
-        display="flex"
-        // marginX="auto"
-        // padding="30px"
-        justifyContent="center">
-        <Box width="600px">
+      <Box display="flex" justifyContent="center">
+        <Box
+          width="28%"
+          sx={{ "@media(max-width:500px)": { display: "none" } }}>
           {/* its wrking but not visible on the screen  */}
           <Typography padding="20px">Filters</Typography>
 
           <Accordion
             sx={{
-              width: "300px", 
+              width: "100%",
               background: "white",
               borderStyle: "none",
-              cursor:"pointer"
-              
+              cursor: "pointer",
             }}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               // id="panel1a-header"
               sx={{
-                color: "black"
+                color: "black",
               }}>
               Gender
             </AccordionSummary>
             <AccordionDetails
               sx={{
-                width: "100%", 
-                color: "black"
+                width: "100%",
+                color: "black",
               }}>
               <ul style={listItemStyle}>
-                <li>Women</li>
-                <li>Unisex</li>
+                <li value="men" onClick={() => handleFilter("Men", "gender")}>
+                  Men
+                </li>
+                <li
+                  value="women"
+                  onClick={() => handleFilter("Women", "gender")}>
+                  Women
+                </li>
               </ul>
             </AccordionDetails>
           </Accordion>
 
           <Accordion
             sx={{
-              width: "300px", 
+              width: "100%",
               background: "white",
               borderStyle: "none",
-              cursor:"pointer"
+              cursor: "pointer",
             }}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               // id="panel1a-header"
               sx={{
-                color: "black"
+                color: "black",
               }}>
-              Sizes
+              price
             </AccordionSummary>
             <AccordionDetails
               sx={{
-                width: "100%", 
-                color: "black"
+                width: "100%",
+                color: "black",
               }}>
               <ul style={listItemStyle}>
-                <li>XS</li>
-                <li>S</li>
-                <li>M</li>
-                <li>L</li>
-                <li>XL</li>
-                <li>2XL</li>
-                <li>3XL</li>
+                <li onClick={() => handleFilter("100", "price")}>Below 100</li>
+                <li onClick={() => handleFilter("500", "price")}>Below 500</li>
+                <li onClick={() => handleFilter("700", "price")}>Below 750</li>
+                <li onClick={() => handleFilter("1000", "price")}>
+                  Below 1000
+                </li>
+                <li onClick={() => handleFilter("1500", "price")}>
+                  Below 1500
+                </li>
+                <li onClick={() => handleFilter("2000", "price")}>
+                  Below 2000
+                </li>
               </ul>
             </AccordionDetails>
           </Accordion>
 
           <Accordion
             sx={{
-              width: "300px", 
+              width: "100%",
               background: "white",
               borderStyle: "none",
-              cursor:"pointer"
+              cursor: "pointer",
             }}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               // id="panel1a-header"
               sx={{
-                color: "black"
+                color: "black",
+              }}>
+              Color
+            </AccordionSummary>
+            <AccordionDetails
+              sx={{
+                width: "100%",
+                color: "black",
+              }}>
+              <ul style={listItemStyle}>
+                <li onClick={() => handleFilter("BLACK", "color")}>Black</li>
+                <li onClick={() => handleFilter("WHITE", "color")}>White</li>
+                <li onClick={() => handleFilter("BROWN", "color")}>Brown</li>
+                <li onClick={() => handleFilter("BLUE", "color")}>Blue</li>
+                <li onClick={() => handleFilter("GREEN", "color")}>Green</li>
+                <li onClick={() => handleFilter("RED", "color")}>Red</li>
+                <li onClick={() => handleFilter("PINK", "color")}>Pink</li>
+                <li onClick={() => handleFilter("LAVENDER", "color")}>
+                  Lavender
+                </li>
+                <li onClick={() => handleFilter("YELLOW", "color")}>Yellow</li>
+                <li onClick={() => handleFilter("GREY", "color")}>Grey</li>
+              </ul>
+            </AccordionDetails>
+          </Accordion>
+
+          <Accordion
+            sx={{
+              width: "100%",
+              background: "white",
+              borderStyle: "none",
+              cursor: "pointer",
+            }}>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              // id="panel1a-header"
+              sx={{
+                color: "black",
               }}>
               Brand
             </AccordionSummary>
             <AccordionDetails
               sx={{
-                width: "100%", 
-                color: "black"
+                width: "100%",
+                color: "black",
               }}>
               <ul style={listItemStyle}>
                 <li>Bewakoof</li>
@@ -158,61 +215,24 @@ function FilteredPage() {
 
           <Accordion
             sx={{
-              width: "300px", 
+              width: "100%",
               background: "white",
               borderStyle: "none",
-              cursor:"pointer"
+              cursor: "pointer",
             }}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               // id="panel1a-header"
               sx={{
-                color: "black"
-              }}>
-              Color
-            </AccordionSummary>
-            <AccordionDetails
-              sx={{
-                width: "100%", 
-                color: "black"
-              }}>
-              <ul style={listItemStyle}>
-                <li>Black</li>
-                <li>White</li>
-                <li>Purple</li>
-                <li>Blue</li>
-                <li>Green</li>
-                <li>Red</li>
-                <li>Pink</li>
-                <li>Brown</li>
-                <li>Yellow</li>
-                <li>Orange</li>
-                <li>Grey</li>
-              </ul>
-            </AccordionDetails>
-          </Accordion>
-
-          <Accordion
-            sx={{
-              width: "300px", 
-              background: "white",
-              borderStyle: "none",
-              cursor:"pointer"
-            }}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              // id="panel1a-header"
-              sx={{
-                color: "black"
+                color: "black",
               }}>
               Design
             </AccordionSummary>
             <AccordionDetails
               sx={{
-                width: "100%", 
-                color: "black"
+                width: "100%",
+                color: "black",
               }}>
               <ul style={listItemStyle}>
                 <li>Graphic Print</li>
@@ -230,24 +250,24 @@ function FilteredPage() {
 
           <Accordion
             sx={{
-              width: "300px", 
+              width: "100%",
               background: "white",
               borderStyle: "none",
-              cursor:"pointer"
+              cursor: "pointer",
             }}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               // id="panel1a-header"
               sx={{
-                color: "black"
+                color: "black",
               }}>
               Sleeve
             </AccordionSummary>
             <AccordionDetails
               sx={{
-                width: "100%", 
-                color: "black"
+                width: "100%",
+                color: "black",
               }}>
               <ul style={listItemStyle}>
                 <li>Half Sleeve</li>
@@ -258,110 +278,24 @@ function FilteredPage() {
 
           <Accordion
             sx={{
-              width: "300px", 
+              width: "100%",
               background: "white",
               borderStyle: "none",
-              cursor:"pointer"
+              cursor: "pointer",
             }}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               // id="panel1a-header"
               sx={{
-                color: "black"
-              }}>
-              Neck
-            </AccordionSummary>
-            <AccordionDetails
-              sx={{
-                width: "100%", 
-                color: "black"
-              }}>
-              <ul style={listItemStyle}>
-                <li>Round Neck</li>
-                <li>Polo</li>
-                <li>V-Neck</li>
-              </ul>
-            </AccordionDetails>
-          </Accordion>
-
-          <Accordion
-            sx={{
-              width: "300px", 
-              background: "white",
-              borderStyle: "none",
-              cursor:"pointer"
-            }}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              // id="panel1a-header"
-              sx={{
-                color: "black"
-              }}>
-              Type
-            </AccordionSummary>
-            <AccordionDetails
-              sx={{
-                width: "100%", 
-                color: "black"
-              }}>
-              <ul style={listItemStyle}>
-                <li>T-Shirt</li>
-                <li>Polo</li>
-              </ul>
-            </AccordionDetails>
-          </Accordion>
-
-          <Accordion
-            sx={{
-              width: "300px", 
-              background: "white",
-              borderStyle: "none",
-              cursor:"pointer"
-            }}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              // id="panel1a-header"
-              sx={{
-                color: "black"
-              }}>
-              Ratings
-            </AccordionSummary>
-            <AccordionDetails
-              sx={{
-                width: "100%", 
-                color: "black"
-              }}>
-              <ul style={listItemStyle}>
-                <li>4.5 and above</li>
-                <li>4 and above</li>
-                <li>3.5 and above</li>
-              </ul>
-            </AccordionDetails>
-          </Accordion>
-
-          <Accordion
-            sx={{
-              width: "300px", 
-              background: "white",
-              borderStyle: "none",
-              cursor:"pointer"
-            }}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              // id="panel1a-header"
-              sx={{
-                color: "black"
+                color: "black",
               }}>
               Offers
             </AccordionSummary>
             <AccordionDetails
               sx={{
-                width: "100%", 
-                color: "black"
+                width: "100%",
+                color: "black",
               }}>
               <ui>
                 <li>Buy 3 for 119</li>
@@ -371,24 +305,24 @@ function FilteredPage() {
 
           <Accordion
             sx={{
-              width: "300px", 
+              width: "100%",
               background: "white",
               borderStyle: "none",
-              cursor:"pointer"
+              cursor: "pointer",
             }}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               // id="panel1a-header"
               sx={{
-                color: "black"
+                color: "black",
               }}>
               Discount
             </AccordionSummary>
             <AccordionDetails
               sx={{
-                width: "100%", 
-                color: "black"
+                width: "100%",
+                color: "black",
               }}>
               <ul style={listItemStyle}>
                 <li>10% Or More</li>
@@ -400,40 +334,23 @@ function FilteredPage() {
               </ul>
             </AccordionDetails>
           </Accordion>
-          <Accordion
-            sx={{
-              width: "300px", 
-              background: "white",
-              borderStyle: "none",
-              cursor:"pointer"
-            }}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              // id="panel1a-header"
-              sx={{
-                color: "black"
-              }}>
-              Sort By
-            </AccordionSummary>
-            <AccordionDetails
-              sx={{
-                width: "100%", 
-                color: "black"
-              }}>
-              <ul style={listItemStyle}>
-                <li>Popular</li>
-                <li>New</li>
-                <li>Price:High to Low</li>
-                <li>Price:Low to High</li>
-              </ul>
-            </AccordionDetails>
-          </Accordion>
         </Box>
-        <Box display="flex" alignItems="center" flexWrap="wrap" gap="10px">
-          {filteredProduct?.map((obj) => {
-            return <Product obj={obj} />;
-          })}
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="space-around"
+          flexWrap="wrap"
+          gap="40px"
+          width="68%">
+          {filteredProduct?.length === 0 ? (
+            <Typography alignSelf="baseline">
+              Please Choose Another Category
+            </Typography>
+          ) : (
+            filteredProduct?.map((obj) => {
+              return <Product obj={obj} key={obj._id} />;
+            })
+          )}
         </Box>
       </Box>
     </Box>

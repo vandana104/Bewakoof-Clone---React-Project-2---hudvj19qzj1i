@@ -5,10 +5,12 @@ import axios from "axios";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import { useNavigate } from "react-router-dom";
 
 function ProductDetail() {
-  const [{ products, productId }] = useStateProvider();
+  const [{ products, productId, token }, dispatch] = useStateProvider();
   const [ownProduct, setOwnProduct] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -22,17 +24,65 @@ function ProductDetail() {
       )
       .then((response) => {
         console.log(response.data.data);
-        setOwnProduct(response.data.data);
+        const productCard = JSON.parse(localStorage.getItem("products")) || [];
+        // const changedVideo = productCard.find(
+        const changedProduct = productCard.find(
+          (obj) => obj._id === response.data.data._id,
+        );
+        if (changedProduct) {
+          setOwnProduct(changedProduct);
+        } else {
+          setOwnProduct(response.data.data);
+        }
       })
+      //   if (changedVideo) {
+      //     setOwnProduct(changedVideo);
+      //   } else {
+      //     setOwnProduct(response.data.data);
+      //   }
+      // })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
+  const handleWishList = () => {
+    if (token === null) {
+      console.log(token);
+      alert("Please LogIn");
+    } else {
+      if (ownProduct?.wishList) {
+        ownProduct.wishList = false;
+      } else {
+        ownProduct.wishList = true;
+      }
+      setDispatch();
+    }
+  };
+
+  const setDispatch = () => {
+    const productcard = JSON.parse(localStorage.getItem("products")) || [];
+    const index = productcard.findIndex((obj) => obj._id === ownProduct._id);
+    productcard[index] = ownProduct;
+    localStorage.setItem("products", JSON.stringify(productcard));
+    setOwnProduct(ownProduct);
+    navigate("/");
+    navigate("/product");
+    console.log("ownjfbksbf", ownProduct);
+  };
+
   return (
     <>
-      <Box display="flex" mt="10px" justifyContent="center">
-        <Box display="flex" height="650px" width="510px">
+      <Box
+        display="flex"
+        mt="10px"
+        justifyContent="center"
+        sx={{ "@media(max-width:645px)": { flexDirection: "column" } }}>
+        <Box
+          display="flex"
+          height="650px"
+          width="50%"
+          sx={{ "@media(max-width:645px)": { width: "95%" } }}>
           <Box
             display="flex"
             flexDirection="column"
@@ -48,7 +98,7 @@ function ProductDetail() {
                   objectFit: "cover",
                 }}
                 src={obj}
-                alt={`Image ${index + 1}`}
+                alt={Image `${index + 1}`}
               />
             ))}
           </Box>
@@ -56,7 +106,7 @@ function ProductDetail() {
             <img
               style={{
                 height: "570px",
-                width: "380px",
+                width: "98%",
                 objectFit: "cover",
               }}
               src={ownProduct?.displayImage}
@@ -64,11 +114,17 @@ function ProductDetail() {
           </Box>
         </Box>
 
-        <Box height="auto" mt="40px" lineHeight="70px">
+        <Box
+          height="auto"
+          mt="40px"
+          ml="10px"
+          lineHeight="70px"
+          width="46%"
+          sx={{ "@media(max-width:645px)": { width: "90%", ml: "30px" } }}>
           <Typography fontWeight="600">{ownProduct?.brand}</Typography>
-          <Typography>{ownProduct?.price}</Typography>
+          <Typography>&#8377;{ownProduct?.price}</Typography>
           <Typography>inclusive of all taxes</Typography>
-          <Button>{ownProduct?.subCategory}</Button>
+          <Typography>{ownProduct?.subCategory}</Typography>
           <Typography>
             TriBe members get an extra discount of ₹30 and FREE shipping.
           </Typography>
@@ -78,7 +134,7 @@ function ProductDetail() {
             <Typography>SELECT SIZE</Typography>
             <Typography color="blue">Size Guide</Typography>
           </Box>
-          <Box display="flex"  gap="10px" margin="10px">
+          <Box display="flex" gap="10px" margin="10px">
             <Typography
               display="flex"
               alignItems="center"
@@ -163,15 +219,20 @@ function ProductDetail() {
               <ShoppingBagOutlinedIcon sx={{ pr: "7.5px" }} /> ADD TO BAG
             </Button>
             <Button
+              onClick={handleWishList}
               display="flex"
               justifyContent="space-between"
               alignItems="center"
               variant="outlined"
-              sx={{ border: "0.5px solid lightgrey", color: "inherit" }}>
+              sx={{
+                border: "0.5px solid lightgrey",
+                color: "inherit",
+                background: ownProduct?.wishList ? "rgba(0,255,255)" : "white",
+              }}>
               <FavoriteBorderOutlinedIcon
                 sx={{ pr: "7.5px", color: "lightgray" }}
               />
-              WISHLIST
+              {ownProduct?.wishList ? "UNFAVOURITE" : "FAVOURITE"}
             </Button>
           </Box>
           <hr />
@@ -183,9 +244,14 @@ function ProductDetail() {
             Delivery in <a>country</a>
           </Typography>
 
-
-              {/* button inside textfield */}
-          <Box width="100%" display="flex" height="55px" alignItems="center" border="0.5px solid lightgrey" borderRadius="5px">
+          {/* button inside textfield */}
+          <Box
+            width="100%"
+            display="flex"
+            height="55px"
+            alignItems="center"
+            border="0.5px solid lightgrey"
+            borderRadius="5px">
             {/* <TextField
               label="Text Field"
               variant="outlined"
@@ -193,13 +259,9 @@ function ProductDetail() {
             />{" "}
             <Typography>CHECK</Typography> */}
             {/* <Input label="Text Field" */}
-              {/* // variant="standard" */}
-              {/* sx={{ borderBottom: "none" }} />  */}
+            {/* // variant="standard" */}
+            {/* sx={{ borderBottom: "none" }} />  */}
           </Box>
-
-
-
-
         </Box>
       </Box>
     </>
