@@ -4,15 +4,15 @@ import SignUp from "./components/SignUp/SignUp";
 import TopHeader from "./components/Header/TopHeader";
 import MainHeader from "./components/Header/MainHeader";
 import HomePage from "./components/HomePage/HomePage";
+import Footer from "./components/Footer/Footer";
 import ProductDetail from "./components/ProductDetail/ProductDetail";
-import Footer from "./components/Footer/Footer"
 import { Route, Routes, useLocation } from "react-router-dom";
 import FilteredPage from "./components/FilteredPage/FilteredPage";
 import Cart from "./components/Cart/Cart";
 import Wishlist from "./components/Wishlist/Wishlist";
 import { useEffect } from "react";
 import { useStateProvider } from "./utils/StateProvider";
-import Product from "./components/Product";
+import SearchResults from "./components/SearchResults";
 
 function App() {
   const location = useLocation();
@@ -43,12 +43,10 @@ function App() {
             <Route path="/product" element={<ProductDetail />} />
             <Route path="/filter" element={<FilteredPage />} />
             <Route path="/cart" element={<Cart />} />
-{/* /////////////////////////////////////////////////// */}
-            <Route path="/cartproduct" element={<Product/>} />
-{/* ///////////////////////////////////////////////////////////////// */}
             <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/search" element={<SearchResults />} />
           </Routes>
-          <Footer/>
+          <Footer />
         </>
       )}
 

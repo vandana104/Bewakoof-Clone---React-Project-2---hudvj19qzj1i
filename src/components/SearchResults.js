@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useStateProvider } from "../../utils/StateProvider";
 import {
   Accordion,
   AccordionDetails,
@@ -7,23 +6,20 @@ import {
   Box,
   Typography,
 } from "@mui/material";
-import Product from "../Product";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useStateProvider } from "../utils/StateProvider";
+import Product from "./Product";
 
-function FilteredPage() {
-  const [{ filteredProducts, products }] = useStateProvider();
+function SearchResults() {
+  const [{ searchProducts, products }] = useStateProvider();
   const [filteredProduct, setFilteredProduct] = useState(null);
   const [duplicateFilter, setduplicateFilter] = useState(null);
 
   useEffect(() => {
-    const filtered = products?.filter(
-      (obj) =>
-        obj.sellerTag.charAt(0).toUpperCase() + obj.sellerTag.slice(1) ===
-        filteredProducts,
-    );
-    setFilteredProduct(filtered);
-    setduplicateFilter(filtered);
-  }, []);
+    console.log("sdfs", searchProducts);
+    setFilteredProduct(searchProducts);
+    setduplicateFilter(searchProducts);
+  }, [searchProducts]);
 
   useEffect(() => {
     console.log(filteredProduct);
@@ -58,7 +54,7 @@ function FilteredPage() {
       width="100%">
       <Box display="flex" padding="15px" marginLeft="20px">
         <Typography variant="h5" fontWeight="600" color="black">
-          {filteredProducts}
+          Search results
         </Typography>
         <Typography variant="h5" marginLeft="15px">
           {`(${filteredProduct?.length})`}
@@ -347,20 +343,15 @@ function FilteredPage() {
               Please Choose Another Category
             </Typography>
           ) : (
-            filteredProduct?.map((obj) => {
-              return (
-                <Product
-                  obj={obj}
-                  key={obj._id}
-                  size={{ width: "300px", height: "406px" }}
-                />
-              );
-            })
+            filteredProduct?.map((obj, index) => (
+              <Product key={index} obj={obj} size={{width:"200px", height:"350px"}} />
+            ))
           )}
         </Box>
       </Box>
     </Box>
+    // <></>
   );
 }
 
-export default FilteredPage;
+export default SearchResults;

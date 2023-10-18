@@ -10,7 +10,14 @@ import { useNavigate } from "react-router-dom";
 function ProductDetail() {
   const [{ products, productId, token }, dispatch] = useStateProvider();
   const [ownProduct, setOwnProduct] = useState(null);
+  ///////////////////////////////////////////////////////
+  const [cart, setCart] = useState(null);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("own", ownProduct);
+  }, [ownProduct]);
 
   useEffect(() => {
     axios
@@ -25,22 +32,27 @@ function ProductDetail() {
       .then((response) => {
         console.log(response.data.data);
         const productCard = JSON.parse(localStorage.getItem("products")) || [];
-        // const changedVideo = productCard.find(
         const changedProduct = productCard.find(
           (obj) => obj._id === response.data.data._id,
         );
-        if (changedProduct) {
+        const index = productCard.findIndex(
+          (obj) => obj._id === response.data.data._id,
+        );
+        if (
+          changedProduct?.wishList === true ||
+          changedProduct?.wishList === false ||
+          changedProduct?.cart === true ||
+          changedProduct?.cart === false
+        ) {
+          console.log("yess");
           setOwnProduct(changedProduct);
         } else {
+          console.log("first");
+          productCard[index] = response.data.data;
+          localStorage.setItem("products", JSON.stringify(productCard));
           setOwnProduct(response.data.data);
         }
       })
-      //   if (changedVideo) {
-      //     setOwnProduct(changedVideo);
-      //   } else {
-      //     setOwnProduct(response.data.data);
-      //   }
-      // })
       .catch((err) => {
         console.log(err);
       });
@@ -48,7 +60,7 @@ function ProductDetail() {
 
   const handleWishList = () => {
     if (token === null) {
-      console.log(token);
+      // console.log(token); just for error handling
       alert("Please LogIn");
     } else {
       if (ownProduct?.wishList) {
@@ -56,11 +68,23 @@ function ProductDetail() {
       } else {
         ownProduct.wishList = true;
       }
-      setDispatch();
+      handleStorage();
+    }
+  };
+  const handleCart = () => {
+    if (token === null) {
+      alert("Login before you are adding item to cart!");
+    } else {
+      if (ownProduct?.cart) {
+        ownProduct.cart = false;
+      } else {
+        ownProduct.cart = true;
+      }
+      handleStorage();
     }
   };
 
-  const setDispatch = () => {
+  const handleStorage = () => {
     const productcard = JSON.parse(localStorage.getItem("products")) || [];
     const index = productcard.findIndex((obj) => obj._id === ownProduct._id);
     productcard[index] = ownProduct;
@@ -98,7 +122,7 @@ function ProductDetail() {
                   objectFit: "cover",
                 }}
                 src={obj}
-                alt={Image `${index + 1}`}
+                alt={`Image ${index + 1}`}
               />
             ))}
           </Box>
@@ -215,8 +239,9 @@ function ProductDetail() {
               justifyContent="space-between"
               alignItems="center"
               variant="contained"
-              sx={{ backgroundColor: "#ffd84d", color: "black" }}>
-              <ShoppingBagOutlinedIcon sx={{ pr: "7.5px" }} /> ADD TO BAG
+              sx={{ backgroundColor: "#ffd84d", color: "black" }}
+              onClick={handleCart}>
+              <ShoppingBagOutlinedIcon sx={{ pr: "7.5px" }} /> ADD TO CART
             </Button>
             <Button
               onClick={handleWishList}

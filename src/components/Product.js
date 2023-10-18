@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStateProvider } from "../utils/StateProvider";
 
-function Product({ obj, key }) {
+function Product({ obj, key, size }) {
   const [{ productId }, dispatch] = useStateProvider();
 
   const navigate = useNavigate();
@@ -15,12 +15,9 @@ function Product({ obj, key }) {
     console.log(flag);
 
     if (!flag) {
-      const UpdatedCard = [...productcard, obj];
-      localStorage.setItem("products", JSON.stringify(UpdatedCard));
+      const UpdatedVideo = [...productcard, obj];
+      localStorage.setItem("products", JSON.stringify(UpdatedVideo));
       console.log(productcard);
-      // const UpdatedVideo = [...productcard, obj];
-      // localStorage.setItem("products", JSON.stringify(UpdatedVideo));
-      // console.log(productcard);
     }
   };
 
@@ -29,8 +26,8 @@ function Product({ obj, key }) {
       display="flex"
       flexDirection="column"
       border="1px solid rgba(1,1,1,0.3)"
-      width="300px"
-      height="406px"
+      width={size.width}
+      height={size.height}
       onClick={() => {
         console.log(obj._id);
         dispatch({ type: "SET_PRODUCTID", payload: obj._id });

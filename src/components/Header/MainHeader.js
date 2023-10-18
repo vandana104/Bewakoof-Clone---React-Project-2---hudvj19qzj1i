@@ -17,8 +17,9 @@ import { useNavigate } from "react-router-dom";
 import { useStateProvider } from "../../utils/StateProvider";
 
 function MainHeader() {
-  const [, dispatch] = useStateProvider();
+  const [{ products, token }, dispatch] = useStateProvider();
   const navigate = useNavigate();
+  const [search, setSearch] = useState("");
   const [avatarMenuAnchorEl, setAvatarMenuAnchorEl] = useState(null);
   const userName = localStorage.getItem("userName") || "";
 
@@ -33,6 +34,43 @@ function MainHeader() {
   const handleLogOut = () => {
     localStorage.clear();
     navigate("/");
+  };
+
+  const handleChangeKey = (e) => {
+    const searchValue = e.target.value.toLowerCase();
+    setSearch(searchValue);
+    const updatedPost1 = products.filter((post) =>
+      post.brand.toLowerCase().includes(searchValue),
+    );
+    const updatedPost2 = products.filter((post) => post.price === searchValue);
+    const updatedPost3 = products.filter((post) =>
+      post.subCategory.toLowerCase().includes(searchValue),
+    );
+    const updatedPost4 = products.filter((post) =>
+      post.sellerTag.toLowerCase().includes(searchValue),
+    );
+    const updatedPost5 = products.filter((post) =>
+      post.gender.toLowerCase().includes(searchValue),
+    );
+    const result = [
+      ...updatedPost1,
+      ...updatedPost2,
+      ...updatedPost3,
+      ...updatedPost4,
+      ...updatedPost5,
+    ];
+    // Remove duplicate objects based on the _id property
+    const uniqueResult = result.reduce((unique, item) => {
+      if (!unique.some((uniqueItem) => uniqueItem._id === item._id)) {
+        unique.push(item);
+      }
+      return unique;
+    }, []);
+
+    console.log(result);
+    dispatch({ type: "SET_SEARCHRESULT", payload: result });
+    navigate("/");
+    navigate("/search");
   };
 
   return (
@@ -53,6 +91,7 @@ function MainHeader() {
       </Box>
       <Box display="flex">
         <TextField
+          onChange={handleChangeKey}
           placeholder="Search..."
           variant="outlined"
           InputProps={{
@@ -68,12 +107,18 @@ function MainHeader() {
         />
         <Divider orientation="vertical" className="vertical-divider" />
         <Box display="flex" alignItems="center" gap="12px">
-          <PersonIcon sx={{ cursor: "pointer" }} />
-          <FavoriteBorderIcon
-            sx={{ cursor: "pointer" }}
-            onClick={() => navigate("/wishlist")}
-          />
-          <ShoppingBagOutlinedIcon sx={{ cursor: "pointer" }} />
+          {token && (
+            <>
+              <FavoriteBorderIcon
+                sx={{ cursor: "pointer" }}
+                onClick={() => navigate("/wishlist")}
+              />
+              <ShoppingBagOutlinedIcon
+                sx={{ cursor: "pointer" }}
+                onClick={() => navigate("/cart")}
+              />
+            </>
+          )}
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <Avatar
               alt="User Avatar"

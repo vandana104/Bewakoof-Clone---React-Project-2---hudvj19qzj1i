@@ -4,6 +4,9 @@ import { Box, Typography } from "@mui/material";
 import axios from "axios";
 import { useStateProvider } from "../../utils/StateProvider";
 import { useNavigate } from "react-router-dom";
+import Product from "../Product";
+import dummy from "../images/dummy.webp";
+import dummy2 from "../images/dummy2.jpg";
 
 function HomePage() {
   const projectId = "f104bi07c490";
@@ -26,8 +29,8 @@ function HomePage() {
       .then((response) => {
         dispatch({ type: "SET_PRODUCTS", payload: response.data.data });
         // const filter = response.data.data.filter((obj)=> obj.sellerTag != null )
-        // // console.log(filter);
-        const map = response.data.data.map((obj) => obj.sellerTag);
+        // console.log(filter);
+        const map = response.data.data.map((obj) => obj.subCategory);
         console.log(map);
 
         const uniqueSellerTags = {};
@@ -46,7 +49,7 @@ function HomePage() {
   useEffect(() => {
     console.log(products);
     if (products) {
-      setSlideImage(products.slice(2, 7));
+      setSlideImage(products.slice(20, 25));
     }
   }, [products]);
 
@@ -65,7 +68,7 @@ function HomePage() {
         display="flex"
         sx={{
           width: "100%",
-
+          mt: "15px",
           height: "auto",
           overflowX: "auto",
           whiteSpace: "nowrap",
@@ -87,6 +90,15 @@ function HomePage() {
           />
         ))}
       </Box>
+      <Typography
+        sx={{
+          textAlign: "center",
+          fontSize: "23px",
+          fontWeight: 600,
+          my: "20px",
+        }}>
+        TRENDING CATEGORIES
+      </Typography>
       <Box
         display="flex"
         height="250px"
@@ -131,6 +143,43 @@ function HomePage() {
           </Box>
         ))}
       </Box>
+      <Typography
+        sx={{
+          textAlign: "center",
+          fontSize: "23px",
+          fontWeight: 600,
+          my: "20px",
+        }}>
+        Hot Deals
+      </Typography>
+      <Box
+        display="flex"
+        gap="8px"
+        mx="10px"
+        sx={{
+          "& .fit-content-width": {
+            width: "fit-content",
+          },
+          overflowX: "scroll",
+          overflowY: "hidden",
+          "&::-webkit-scrollbar": {
+            width: "0.5rem",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "transparent",
+          },
+        }}>
+          
+        {products?.slice(10, 30).map((obj) => (
+          <Product
+            key={obj._id}
+            obj={obj}
+            size={{ width: "200px", height: "350px" }}
+          />
+        ))}
+      </Box>
+      <img src={dummy} style={{ width: "100%", objectFit: "contain" }} />
+      <img src={dummy2} style={{ width: "100%", objectFit: "contain" }} />
     </div>
   );
 }
