@@ -111,7 +111,7 @@ function ProductDetail() {
             display="flex"
             flexDirection="column"
             padding="15px"
-            margin="auto"
+            justifyContent="center"
             gap="10px">
             {ownProduct?.images?.map((obj, index) => (
               <img
