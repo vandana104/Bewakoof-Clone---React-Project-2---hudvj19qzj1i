@@ -13,6 +13,8 @@ import Wishlist from "./components/Wishlist/Wishlist";
 import { useEffect } from "react";
 import { useStateProvider } from "./utils/StateProvider";
 import SearchResults from "./components/SearchResults";
+import UserAccount from "./components/User/UserAccount";
+import Profile from "./components/User/Profile";
 
 function App() {
   const location = useLocation();
@@ -45,6 +47,8 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/search" element={<SearchResults />} />
+            <Route path="/account" element={<UserAccount />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
           <Footer />
         </>

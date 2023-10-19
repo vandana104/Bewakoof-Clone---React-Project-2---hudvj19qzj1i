@@ -35,6 +35,9 @@ function MainHeader() {
     localStorage.clear();
     navigate("/");
   };
+  const handleAccount =() =>{
+    navigate("/account")
+  }
 
   const handleChangeKey = (e) => {
     const searchValue = e.target.value.toLowerCase();
@@ -139,6 +142,7 @@ function MainHeader() {
                     Hello.. {userName}
                   </MenuItem>
                   <MenuItem onClick={handleLogOut}>Logout</MenuItem>
+                  <MenuItem onClick={handleAccount}>My Account</MenuItem>
                 </div>
               ) : (
                 <div>
