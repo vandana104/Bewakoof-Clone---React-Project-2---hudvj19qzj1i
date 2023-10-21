@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./Login.css";
 import IconButton from "@mui/material/IconButton";
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
@@ -8,7 +7,7 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Button, Link, Typography } from "@mui/material";
+import { Box, Button, Link, Typography } from "@mui/material";
 import TopHeader from "../Header/TopHeader";
 import MainHeader from "../Header/MainHeader";
 import axios from "axios";
@@ -46,6 +45,8 @@ function Login() {
     try {
       let response = await axios.request(reqOptions);
       console.log(response);
+      localStorage.setItem("password", password);
+      localStorage.setItem("email", email);
       if (response.status === 200) {
         console.log(response);
         alert("SuccessFully Logged In");
@@ -95,23 +96,51 @@ function Login() {
     }
   };
   return (
-    <>
+    <Box sx={{ margin: 0, padding: 0 }}>
       <TopHeader />
       <MainHeader />
-      <div className="login-container">
-        <div className="login-body">
-          <form className="login-form">
-            <h2 className="login-h2">Log into your account</h2>
+      <Box
+        display="flex"
+        justifyContent="center"
+        height="664px"
+        width="100%"
+        sx={{
+          backgroundImage: "linear-gradient(0deg, #fff4c4, #fff)",
+        }}>
+        <Box
+          display="flex"
+          justifyContent="center"
+          width="70%"
+          height="640px"
+          backgroundColor="white">
+          <form
+          
+            style={{
+              container: {
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                // width: "30%",
+                // height: "640px",
+              },
+            }}>
+            <h2
+              style={{
+                marginTop: "110px",
+                fontFamily: "montserrat-bold,sans-serif",
+              }}>
+              Log into your account
+            </h2>
             <TextField
               fullWidth
-              className="login-email"
               sx={{ marginTop: "60px" }}
               label="Email"
               variant="standard"
               onChange={(e) => setEmail(e.target.value)}
             />
             <FormControl
-              className="login-password"
+              width="100%"
+              fullWidth
               variant="standard"
               sx={{ marginTop: "60px" }}>
               <InputLabel htmlFor="standard-adornment-password">
@@ -136,7 +165,7 @@ function Login() {
             <Link
               to="/forgot"
               sx={{
-                marginTop: "80px",
+                marginTop: "50px",
                 textDecoration: "none",
                 fontFamily: "montserrat,sans-serif",
               }}>
@@ -155,12 +184,20 @@ function Login() {
               }}>
               Login
             </Button>
-            <Typography>Create new</Typography>
-            <Link href="/signup">Signup</Link>
+            <Box
+              display="flex"
+              width="100%"
+              justifyContent="space-between"
+              mt="40px">
+              <Typography>Create new account ?</Typography>
+              <Link style={{ textDecoration: "none" }} href="/signup">
+                Signup
+              </Link>
+            </Box>
           </form>
-        </div>
-      </div>
-    </>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "./SignUp.css";
 import {
+  Box,
   Button,
   Checkbox,
   FormControl,
@@ -90,89 +90,111 @@ function SignUp() {
     }
   };
   return (
-    <div className="signUp-container">
-      <img
-        onClick={() => navigate("/")}
-        src="https://images.bewakoof.com/web/ic-desktop-bwkf-trademark-logo.svg"
-        alt="Bewkoof"
-        style={{ width: "50%", alignSelf: "center", marginTop: "20px" }}
-      />
-      <form className="signUp-form">
-        <h2 className="signUp-h2">Sign Up</h2>
-        <h3 className="signUp-h3">
-          Hi new buddy, let's get you started <br />
-          with the bewakoofi!
-        </h3>
-        <TextField
-          required
-          onChange={(e) => setUsername(e.target.value)}
-          fullWidth
-          className="signUp-name"
-          sx={{ marginTop: "30px" }}
-          label="Name"
-          variant="standard"
-        />
-        <TextField
-          required
-          fullWidth
-          className="signUp-phone"
-          sx={{ marginTop: "30px" }}
-          label="Mobile"
-          variant="standard"
-        />
-        <TextField
-          required
-          onChange={(e) => setEmail(e.target.value)}
-          fullWidth
-          className="signUp-email"
-          sx={{ marginTop: "30px" }}
-          label="Email Id"
-          variant="standard"
-        />
-        <FormControl
-          onChange={(e) => setPassword(e.target.value)}
-          sx={{ marginTop: "30px" }}
-          className="signUp-password"
-          variant="standard">
-          <InputLabel htmlFor="standard-adornment-password">
-            Password
-          </InputLabel>
-          <Input
-            required
-            type={showPassword ? "text" : "password"}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}>
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-        <FormControlLabel
-          sx={{ marginTop: "30px" }}
-          control={<Checkbox defaultChecked />}
-          label="I want to receive order updates on Whatsapp"
-        />
+    <Box
+      display="flex"
+      justifyContent="center"
+      sx={{
+        backgroundImage: "linear-gradient(0deg, #fff4c4, #fff)",
+      }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-evenly",
+          fontFamily: "montserrat, sans-serif",
+          width: "70%",
+          height: "100vh",
 
-        <Button
-          onClick={handleSignUp}
-          variant="contained"
-          className="signUp-button"
-          sx={{
-            marginTop: "40px",
-            width: "100%",
-            height: "50px",
-            backgroundColor: "#989898",
-            boxShadow: "none",
-          }}>
-          PROCEED
-        </Button>
-      </form>
-    </div>
+          
+           
+          
+        }}>
+        <img
+          onClick={() => navigate("/")}
+          src="https://images.bewakoof.com/web/ic-desktop-bwkf-trademark-logo.svg"
+          alt="Bewkoof"
+          style={{ width: "30%", alignSelf: "center", marginTop: "20px",  "@media (max-width: 700px)": {
+            display:"none"
+          } }}
+        />
+        <Box
+          display="flex"
+          width="50%"
+          backgroundColor="white"
+          height="700px"
+          justifyContent="center">
+          <form style={{ width: "80%", marginTop: "80px" }}>
+            <h2>Sign Up</h2>
+            <h3 style={{ marginTop: "20px" }}>
+              Hi new buddy, let's get you started <br />
+              with the bewakoofi!
+            </h3>
+            <TextField
+              required
+              onChange={(e) => setUsername(e.target.value)}
+              fullWidth
+              sx={{ marginTop: "30px" }}
+              label="Name"
+              variant="standard"
+            />
+            <TextField
+              required
+              fullWidth
+              sx={{ marginTop: "30px" }}
+              label="Mobile"
+              variant="standard"
+            />
+            <TextField
+              required
+              onChange={(e) => setEmail(e.target.value)}
+              fullWidth
+              sx={{ marginTop: "30px" }}
+              label="Email Id"
+              variant="standard"
+            />
+            <FormControl
+              onChange={(e) => setPassword(e.target.value)}
+              sx={{ marginTop: "30px" }}
+              variant="standard">
+              <InputLabel htmlFor="standard-adornment-password">
+                Password
+              </InputLabel>
+              <Input
+                required
+                type={showPassword ? "text" : "password"}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}>
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+            <FormControlLabel
+              sx={{ marginTop: "30px" }}
+              control={<Checkbox defaultChecked />}
+              label="I want to receive order updates on Whatsapp"
+            />
+
+            <Button
+              onClick={handleSignUp}
+              variant="contained"
+              sx={{
+                marginTop: "40px",
+                width: "100%",
+                height: "50px",
+                backgroundColor: "#989898",
+                boxShadow: "none",
+              }}>
+              PROCEED
+            </Button>
+          </form>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 

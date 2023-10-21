@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./MainHeader.css";
 import SearchIcon from "@mui/icons-material/Search";
 import {
   Avatar,
+  Badge,
   Box,
   Divider,
   IconButton,
@@ -10,22 +11,30 @@ import {
   MenuItem,
   TextField,
 } from "@mui/material";
-import PersonIcon from "@mui/icons-material/Person";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { useNavigate } from "react-router-dom";
 import { useStateProvider } from "../../utils/StateProvider";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 function MainHeader() {
-  const [{ products, token }, dispatch] = useStateProvider();
+  const [{ products, token, wishlistProducts }, dispatch] = useStateProvider();
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [avatarMenuAnchorEl, setAvatarMenuAnchorEl] = useState(null);
   const userName = localStorage.getItem("userName") || "";
+  const [cartCount, setCartCount] = useState(0);
+  const [wish, setWishlist] = useState([]);
+  const [logout, setLogout] = useState(false);
 
   const handleAvatarClick = (event) => {
     setAvatarMenuAnchorEl(event.currentTarget);
   };
+  useEffect(() => {
+    var productCart = JSON.parse(localStorage.getItem("products")) || [];
+    var filteredItem = productCart.filter((obj) => obj.cart === true);
+    setCartCount(filteredItem?.length);
+  }, [JSON.parse(localStorage.getItem("products"))]);
 
   const handleAvatarClose = () => {
     setAvatarMenuAnchorEl(null);
@@ -33,11 +42,35 @@ function MainHeader() {
 
   const handleLogOut = () => {
     localStorage.clear();
+    setAvatarMenuAnchorEl(null);
+    alert("SuccessFully Logged out");
+    setLogout(true);
     navigate("/");
   };
-  const handleAccount =() =>{
-    navigate("/account")
-  }
+
+  useEffect(() => {
+    let wished = JSON.parse(localStorage.getItem("products"))?.filter(
+      (obj) => obj.wishList === true,
+    );
+    console.log(wished);
+    if (wished !== undefined) {
+      console.log("fuck");
+      setWishlist(wished);
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log("wish", wish);
+  }, [wish]);
+
+  useEffect(() => {
+    const updatedWishlist = JSON.parse(
+      localStorage.getItem("products"),
+    )?.filter((obj) => obj.wishList === true);
+    if (updatedWishlist) {
+      setWishlist(updatedWishlist);
+    }
+  }, [localStorage.getItem("products")]);
 
   const handleChangeKey = (e) => {
     const searchValue = e.target.value.toLowerCase();
@@ -82,7 +115,7 @@ function MainHeader() {
       justifyContent="space-around"
       alignItems="center"
       borderBottom="1px solid grey"
-      height="50px"
+      height="70px"
       width="100%">
       <Box>
         <img
@@ -94,15 +127,18 @@ function MainHeader() {
       </Box>
       <Box display="flex">
         <TextField
+          sx={{
+            height: "56px",
+            paddingLeft: "0px !important",
+            marginRight: "10px",
+            background: "#eaeaea",
+          }}
           onChange={handleChangeKey}
           placeholder="Search..."
           variant="outlined"
           InputProps={{
             startAdornment: (
-              <IconButton
-                sx={{ color: "#555" }}
-                type="submit"
-                aria-label="search">
+              <IconButton sx={{ color: "#555" }} aria-label="search">
                 <SearchIcon />
               </IconButton>
             ),
@@ -110,18 +146,39 @@ function MainHeader() {
         />
         <Divider orientation="vertical" className="vertical-divider" />
         <Box display="flex" alignItems="center" gap="12px">
-          {token && (
+          {token ? (
             <>
-              <FavoriteBorderIcon
-                sx={{ cursor: "pointer" }}
-                onClick={() => navigate("/wishlist")}
-              />
-              <ShoppingBagOutlinedIcon
-                sx={{ cursor: "pointer" }}
-                onClick={() => navigate("/cart")}
-              />
+              {wish?.length === 0 ? (
+                <FavoriteBorderIcon
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => navigate("/wishlist")}
+                />
+              ) : (
+                <FavoriteIcon
+                  sx={{
+                    cursor: "pointer",
+                    color: "red",
+                    ":hover": { transform: "scale(1.6)" },
+                    transition: "transform 0.5s",
+                  }}
+                  onClick={() => navigate("/wishlist")}
+                />
+              )}
+              {cartCount !== 0 ? (
+                <Badge badgeContent={cartCount} color="primary">
+                  <ShoppingBagOutlinedIcon
+                    sx={{ cursor: "pointer" }}
+                    onClick={() => navigate("/cart")}
+                  />
+                </Badge>
+              ) : (
+                <ShoppingBagOutlinedIcon
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => navigate("/cart")}
+                />
+              )}
             </>
-          )}
+          ) : null}
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <Avatar
               alt="User Avatar"
@@ -138,16 +195,36 @@ function MainHeader() {
               onClose={handleAvatarClose}>
               {userName ? (
                 <div>
-                  <MenuItem onClick={() => navigate("/")}>
+                  <MenuItem
+                    onClick={() => {
+                      handleAvatarClose();
+                      navigate("/");
+                    }}>
                     Hello.. {userName}
                   </MenuItem>
                   <MenuItem onClick={handleLogOut}>Logout</MenuItem>
-                  <MenuItem onClick={handleAccount}>My Account</MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      handleAvatarClose();
+                      navigate("/account");
+                    }}>
+                    My Account
+                  </MenuItem>
                 </div>
               ) : (
                 <div>
-                  <MenuItem onClick={() => navigate("/login")}>Login</MenuItem>
-                  <MenuItem onClick={() => navigate("/signup")}>
+                  <MenuItem
+                    onClick={() => {
+                      handleAvatarClose();
+                      navigate("/login");
+                    }}>
+                    Login
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      handleAvatarClose();
+                      navigate("/signup");
+                    }}>
                     Signup
                   </MenuItem>
                 </div>

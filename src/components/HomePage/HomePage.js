@@ -156,6 +156,8 @@ function HomePage() {
         display="flex"
         gap="8px"
         mx="10px"
+        height="396px"
+        pt="22px"
         sx={{
           "& .fit-content-width": {
             width: "fit-content",
@@ -169,7 +171,6 @@ function HomePage() {
             background: "transparent",
           },
         }}>
-          
         {products?.slice(10, 30).map((obj) => (
           <Product
             key={obj._id}

@@ -1,20 +1,8 @@
-
-
-
-
-    
-    .search-input {
+.search-input {
     flex: 1;
     height: 50px;
     }
     
     .search-button {
-    color: #555;
-    }
-
-    .css-1q6at85-MuiInputBase-root-MuiOutlinedInput-root{
-        height: 38px;
-        padding-left: 0px !important;
-        margin-right: 10px;
-        background-color: #eaeaea;
-    }
+    color:#555;
+ }

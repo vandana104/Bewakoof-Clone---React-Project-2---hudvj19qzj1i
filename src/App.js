@@ -15,6 +15,7 @@ import { useStateProvider } from "./utils/StateProvider";
 import SearchResults from "./components/SearchResults";
 import UserAccount from "./components/User/UserAccount";
 import Profile from "./components/User/Profile";
+import Order from "./components/Order/Order";
 
 function App() {
   const location = useLocation();
@@ -22,10 +23,14 @@ function App() {
   useEffect(() => {
     const jwtToken = localStorage.getItem("jwtToken");
     const userName = localStorage.getItem("userName");
+    const wish = JSON.parse(localStorage.getItem("products")) || [];
 
     if (jwtToken && userName) {
       dispatch({ type: "SET_NAME", payload: userName });
       dispatch({ type: "SET_TOKEN", payload: jwtToken });
+
+      const wishlists = wish?.filter((obj) => obj.wishList === true);
+      dispatch({ type: "SET_WISHLISTPRODUCTS", payload: wishlists });
     }
   }, [dispatch]);
   return (
@@ -49,6 +54,7 @@ function App() {
             <Route path="/search" element={<SearchResults />} />
             <Route path="/account" element={<UserAccount />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/buy" element={<Order />} />
           </Routes>
           <Footer />
         </>

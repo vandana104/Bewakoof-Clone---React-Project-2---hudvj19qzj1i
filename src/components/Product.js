@@ -36,7 +36,12 @@ function Product({ obj, key, size }) {
           navigate("/product");
         }, 1000);
       }}
-      sx={{ cursor: "pointer", "@media(max-width:500px)": { width: "200px" } }}>
+      sx={{
+        cursor: "pointer",
+        "@media(max-width:500px)": { width: "200px" },
+        ":hover": { transform: "scale(1.1)" },
+        transition: "transform 0.5s",
+      }}>
       <img
         src={obj.displayImage}
         style={{ width: "100%", height: "75%", objectFit: "cover" }}

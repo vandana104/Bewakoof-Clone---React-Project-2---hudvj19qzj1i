@@ -1,4 +1,12 @@
-import { Box, Button, Input, Link, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Input,
+  Link,
+  Rating,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useStateProvider } from "../../utils/StateProvider";
 import axios from "axios";
@@ -8,16 +16,13 @@ import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import { useNavigate } from "react-router-dom";
 
 function ProductDetail() {
-  const [{ products, productId, token }, dispatch] = useStateProvider();
+  const [{ products, productId, token, wishlistProducts }, dispatch] =
+    useStateProvider();
   const [ownProduct, setOwnProduct] = useState(null);
-  ///////////////////////////////////////////////////////
+  const [value, setValue] = useState(0);
   const [cart, setCart] = useState(null);
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log("own", ownProduct);
-  }, [ownProduct]);
 
   useEffect(() => {
     axios
@@ -49,8 +54,9 @@ function ProductDetail() {
         } else {
           console.log("first");
           productCard[index] = response.data.data;
+          productCard[index].__v = value;
           localStorage.setItem("products", JSON.stringify(productCard));
-          setOwnProduct(response.data.data);
+          setOwnProduct(productCard[index]);
         }
       })
       .catch((err) => {
@@ -94,6 +100,18 @@ function ProductDetail() {
     navigate("/product");
     console.log("ownjfbksbf", ownProduct);
   };
+  const handleRating = () => {
+    if (token === null) {
+      alert("Login before you are rating this product");
+    } else {
+      console.log(ownProduct.__v);
+      if (!ownProduct.__v) {
+        console.log(value);
+        ownProduct.__v = value;
+      }
+      handleStorage();
+    }
+  };
 
   return (
     <>
@@ -105,8 +123,11 @@ function ProductDetail() {
         <Box
           display="flex"
           height="650px"
-          width="50%"
-          sx={{ "@media(max-width:645px)": { width: "95%" } }}>
+          width="35%"
+          sx={{
+            "@media(max-width:1000px)": { width: "45%" },
+            "@media(max-width:645px)": { width: "95%" },
+          }}>
           <Box
             display="flex"
             flexDirection="column"
@@ -126,7 +147,7 @@ function ProductDetail() {
               />
             ))}
           </Box>
-          <Box height="650px" width="450px" display="flex" alignItems="center">
+          <Box height="650px" width="100%" display="flex" alignItems="center">
             <img
               style={{
                 height: "570px",
@@ -143,16 +164,33 @@ function ProductDetail() {
           mt="40px"
           ml="10px"
           lineHeight="70px"
-          width="46%"
-          sx={{ "@media(max-width:645px)": { width: "90%", ml: "30px" } }}>
+          width="35%"
+          sx={{
+            "@media(max-width:645px)": {
+              width: "90% !important",
+              ml: "30px",
+              mb: "30px",
+            },
+            "@media(max-width:1000px)": { width: "45%" },
+          }}>
           <Typography fontWeight="600">{ownProduct?.brand}</Typography>
-          <Typography>&#8377;{ownProduct?.price}</Typography>
+          <Box display="flex" gap="7px">
+            <Typography color="black">&#8377;{ownProduct?.price}</Typography>
+            <Typography fontSize="15px" sx={{ textDecoration: "line-through" }}>
+              &#8377;{ownProduct?.price + 500}
+            </Typography>
+            <Typography fontSize="15px" color="lightgreen">
+              50% off
+            </Typography>
+          </Box>
           <Typography>inclusive of all taxes</Typography>
+          <Typography>{ownProduct?.name}</Typography>
           <Typography>{ownProduct?.subCategory}</Typography>
-          <Typography>
-            TriBe members get an extra discount of ₹30 and FREE shipping.
-          </Typography>
-          <Link>Learn more</Link>
+          <div
+            dangerouslySetInnerHTML={{ __html: ownProduct?.description }}
+            style={{ fontWeight: "600" }}
+          />
+          <Link style={{ cursor: "pointer" }}>Learn more</Link>
           <hr />
           <Box display="flex" justifyContent="space-between" mt="30px">
             <Typography>SELECT SIZE</Typography>
@@ -228,31 +266,24 @@ function ProductDetail() {
           </Box>
           <Box
             display="flex"
-            justifyContent="space-between"
-            alignItems="center"
             width="100%"
             height="auto"
             mt="10px"
-            mb="30px">
+            mb="30px"
+            gap="5px">
             <Button
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              variant="contained"
-              sx={{ backgroundColor: "#ffd84d", color: "black" }}
+              sx={{ backgroundColor: "#ffd84d", color: "black", width: "50%" }}
               onClick={handleCart}>
-              <ShoppingBagOutlinedIcon sx={{ pr: "7.5px" }} /> ADD TO CART
+              <ShoppingBagOutlinedIcon sx={{ pr: "7.5px" }} />{" "}
+              {ownProduct?.cart ? "ADDED" : "ADD TO CART"}
             </Button>
             <Button
               onClick={handleWishList}
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              variant="outlined"
               sx={{
                 border: "0.5px solid lightgrey",
+                width: "50%",
                 color: "inherit",
-                background: ownProduct?.wishList ? "rgba(0,255,255)" : "white",
+                background: ownProduct?.wishList ? "#beadff" : "white",
               }}>
               <FavoriteBorderOutlinedIcon
                 sx={{ pr: "7.5px", color: "lightgray" }}
@@ -261,32 +292,29 @@ function ProductDetail() {
             </Button>
           </Box>
           <hr />
-          <Typography mt="30px">
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            mb="15px">
+            <Typography fontSize="21px" alignSelf="baseline">
+              Ratings
+            </Typography>
+            <Rating
+              onClick={handleRating}
+              sx={{ width: "50%", alignSelf: "center", fontSize: "30px" }}
+              name="simple-controlled"
+              value={value}
+              onChange={(event, newValue) => {
+                setValue(newValue);
+              }}
+            />
+          </Box>
+          <Typography mt="30px" display="flex" mb="30px">
             <LocationOnOutlinedIcon sx={{ pr: "7.5px" }} /> CHECK FOR DELIVERY
             DETAILS
           </Typography>
-          <Typography mt="10px">
-            Delivery in <a>country</a>
-          </Typography>
-
-          {/* button inside textfield */}
-          <Box
-            width="100%"
-            display="flex"
-            height="55px"
-            alignItems="center"
-            border="0.5px solid lightgrey"
-            borderRadius="5px">
-            {/* <TextField
-              label="Text Field"
-              variant="outlined"
-              sx={{ border: "none" }} 
-            />{" "}
-            <Typography>CHECK</Typography> */}
-            {/* <Input label="Text Field" */}
-            {/* // variant="standard" */}
-            {/* sx={{ borderBottom: "none" }} />  */}
-          </Box>
+          <TextField sx={{ height: "40px", ml: "10px", width: "100%" }} />
         </Box>
       </Box>
     </>

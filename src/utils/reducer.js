@@ -6,6 +6,7 @@ export const initialState = {
   filteredProducts: null,
   wishlistProduct: null,
   searchProducts: null,
+  totalPrice: null,
 };
 
 const reducer = (state, action) => {
@@ -25,6 +26,8 @@ const reducer = (state, action) => {
       return { ...state, wishlistProducts: action.payload };
     case "SET_SEARCHRESULT":
       return { ...state, searchProducts: action.payload };
+    case "SET_PRICE":
+      return { ...state, totalPrice: action.payload };
     default:
       return state;
   }
