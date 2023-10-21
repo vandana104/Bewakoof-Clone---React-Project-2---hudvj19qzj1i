@@ -60,6 +60,13 @@ function Cart() {
     setCart(filteredItem);
   };
 
+  const handleBuyProduct = () => {
+    console.log("1");
+    dispatch({ type: "SET_BUYPRODUCTS", payload: cart });
+    console.log("2");
+    navigate("/buy");
+  };
+
   return (
     <Box width="100%">
       {cart.length === 0 ? (
@@ -252,15 +259,6 @@ function Cart() {
                         }}>
                         Remove
                       </Typography>
-                      {/* <Typography
-                        display="flex"
-                        justifyContent="center"
-                        alignItems="center"
-                        width="60%"
-                        height="50px"
-                        sx={{ cursor: "pointer" }}>
-                        Move to Wishlist
-                      </Typography> */}
                     </Box>
                   </Box>
                 );
@@ -346,7 +344,7 @@ function Cart() {
                 alignItems="center">
                 <Typography ml="20px"> Total &#8377;{price}</Typography>
                 <Button
-                  onClick={() => navigate("/buy")}
+                  onClick={handleBuyProduct}
                   sx={{ width: "60%", backgroundColor: "rgb(66, 162, 162)" }}
                   variant="contained">
                   Buy Now
