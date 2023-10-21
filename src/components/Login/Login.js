@@ -114,7 +114,6 @@ function Login() {
           height="640px"
           backgroundColor="white">
           <form
-          
             style={{
               container: {
                 display: "flex",
@@ -142,7 +141,7 @@ function Login() {
               width="100%"
               fullWidth
               variant="standard"
-              sx={{ marginTop: "60px" }}>
+              sx={{ marginTop: "60px", mb: "10px" }}>
               <InputLabel htmlFor="standard-adornment-password">
                 Password
               </InputLabel>
@@ -164,7 +163,7 @@ function Login() {
             </FormControl>
             <Link
               to="/forgot"
-              sx={{
+              style={{
                 marginTop: "50px",
                 textDecoration: "none",
                 fontFamily: "montserrat,sans-serif",
@@ -184,13 +183,11 @@ function Login() {
               }}>
               Login
             </Button>
-            <Box
-              display="flex"
-              width="100%"
-              justifyContent="space-between"
-              mt="40px">
+            <Box display="flex" width="100%" justifyContent="center" mt="40px">
               <Typography>Create new account ?</Typography>
-              <Link style={{ textDecoration: "none" }} href="/signup">
+              <Link
+                style={{ textDecoration: "none", marginLeft: "5px" }}
+                href="/signup">
                 Signup
               </Link>
             </Box>
