@@ -16,6 +16,7 @@ import SearchResults from "./components/SearchResults";
 import UserAccount from "./components/User/UserAccount";
 import Profile from "./components/User/Profile";
 import Order from "./components/Order/Order";
+import OrderDetails from "./components/User/OrderDetails";
 
 function App() {
   const location = useLocation();
@@ -55,18 +56,12 @@ function App() {
             <Route path="/account" element={<UserAccount />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/buy" element={<Order />} />
+            <Route path="/orders" element={<OrderDetails />} />
           </Routes>
           <Footer />
         </>
       )}
 
-      {/* <SignUp/> */}
-      {/* <Login/>   */}
-      {/* <BottomHeader/> */}
-      {/* <HomePage/> */}
-      {/* <Footer/> */}
-      {/* <EmptyCart/> */}
-      {/* <Collection/> */}
     </div>
   );
 }
