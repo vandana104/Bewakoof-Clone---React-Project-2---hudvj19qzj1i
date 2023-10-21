@@ -54,7 +54,6 @@ function MainHeader() {
     );
     console.log(wished);
     if (wished !== undefined) {
-      console.log("fuck");
       setWishlist(wished);
     }
   }, []);
@@ -122,7 +121,7 @@ function MainHeader() {
           onClick={() => navigate("/")}
           src="https://images.bewakoof.com/web/ic-desktop-bwkf-trademark-logo.svg"
           alt="Bewkoof"
-          style={{ width: "70%", cursor: "pointer" }}
+          style={{ width: "80%", cursor: "pointer" }}
         />
       </Box>
       <Box display="flex">
