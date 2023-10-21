@@ -7,6 +7,7 @@ export const initialState = {
   wishlistProduct: null,
   searchProducts: null,
   totalPrice: null,
+  buyProducts: null,
 };
 
 const reducer = (state, action) => {
@@ -28,6 +29,8 @@ const reducer = (state, action) => {
       return { ...state, searchProducts: action.payload };
     case "SET_PRICE":
       return { ...state, totalPrice: action.payload };
+    case "SET_BUYPRODUCTS":
+      return { ...state, buyProducts: action.payload };
     default:
       return state;
   }
