@@ -6,7 +6,7 @@ function TopHeader() {
     <Box
       display="flex"
       justifyContent="space-around"
-      height="25px"
+      py="8px"
       width="100%"
       sx={{
         backgroundColor: "rgb(227, 219, 219)",
