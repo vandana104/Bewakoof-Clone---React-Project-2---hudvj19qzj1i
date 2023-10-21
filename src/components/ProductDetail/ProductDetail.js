@@ -173,7 +173,9 @@ function ProductDetail() {
             },
             "@media(max-width:1000px)": { width: "45%" },
           }}>
-          <Typography fontWeight="600">{ownProduct?.brand}</Typography>
+          <Typography fontWeight="900" fontSize="21px" marginBottom="15px">
+            {ownProduct?.brand}
+          </Typography>
           <Box display="flex" gap="7px">
             <Typography color="black">&#8377;{ownProduct?.price}</Typography>
             <Typography fontSize="15px" sx={{ textDecoration: "line-through" }}>
@@ -184,11 +186,12 @@ function ProductDetail() {
             </Typography>
           </Box>
           <Typography>inclusive of all taxes</Typography>
-          <Typography>{ownProduct?.name}</Typography>
-          <Typography>{ownProduct?.subCategory}</Typography>
+          <Typography fontWeight="600" my="15px">
+            {ownProduct?.name}
+          </Typography>
           <div
             dangerouslySetInnerHTML={{ __html: ownProduct?.description }}
-            style={{ fontWeight: "600" }}
+            style={{ fontWeight: "600", lineHeight: "2.5" }}
           />
           <Link style={{ cursor: "pointer" }}>Learn more</Link>
           <hr />
@@ -268,7 +271,7 @@ function ProductDetail() {
             display="flex"
             width="100%"
             height="auto"
-            mt="10px"
+            my="20px"
             mb="30px"
             gap="5px">
             <Button
