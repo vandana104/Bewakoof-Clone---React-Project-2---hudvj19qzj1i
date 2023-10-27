@@ -14,16 +14,19 @@ function OrderDetails() {
 
   return (
     <Box
-      height="100vh"
       display="flex"
       flexDirection="column"
       alignItems="center"
       mt="30px"
+      mb="20px"
       gap="10px">
+      <Typography textAlign="center" fontSize="23px">
+        My Orders
+      </Typography>
       {bought?.map((obj) => (
         <Box
           key={obj._id}
-          width="95%"
+          width="75%"
           height="auto"
           display="flex"
           flexDirection="column"
