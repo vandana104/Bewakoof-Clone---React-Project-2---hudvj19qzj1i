@@ -59,6 +59,8 @@ function Order() {
         `This is you total amount ${totalPrice} Cash on delivery is only available`,
       );
       navigate("/orders");
+    }else{
+      alert("Fill every details completely...")
     }
   };
 
